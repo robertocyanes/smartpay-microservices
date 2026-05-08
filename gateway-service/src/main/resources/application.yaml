@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: payment
+          uri: lb://payment-service
+          predicates:
+            - Path=/payments/**
+
+        - id: transaction
+          uri: lb://transaction-service
+          predicates:
+            - Path=/transactions/**
+
+        - id: notification
+          uri: lb://notification-service
+          predicates:
+            - Path=/notifications/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eurekaeureka

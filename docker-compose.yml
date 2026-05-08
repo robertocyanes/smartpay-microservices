@@ -1,0 +1,28 @@
+services:
+
+  discovery-server:
+    build: ./discovery-server
+    ports:
+      - "8761:8761"
+
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-server
+
+  payment-service:
+    build: ./payment-service
+    depends_on:
+      - discovery-server
+
+  transaction-service:
+    build: ./transaction-service
+    depends_on:
+      - discovery-server
+
+  notification-service:
+    build: ./notification-service
+    depends_on:
+      - discovery-server
