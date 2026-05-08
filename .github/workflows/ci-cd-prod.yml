@@ -1,0 +1,55 @@
+name: SmartPay Production CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Build Maven
+        run: mvn clean package -DskipTests
+
+      - name: Run Tests
+        run: mvn test
+
+      - name: Login Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+
+      - name: Build & Push Discovery
+        run: |
+          docker build -t $DOCKER_HUB_USER/smartpay-discovery:latest ./discovery-server
+          docker push $DOCKER_HUB_USER/smartpay-discovery:latest
+
+      - name: Build & Push Gateway
+        run: |
+          docker build -t $DOCKER_HUB_USER/smartpay-gateway:latest ./gateway-service
+          docker push $DOCKER_HUB_USER/smartpay-gateway:latest
+
+      - name: Build & Push Payment
+        run: |
+          docker build -t $DOCKER_HUB_USER/smartpay-payment:latest ./payment-service
+          docker push $DOCKER_HUB_USER/smartpay-payment:latest
+
+      - name: Build & Push Transaction
+        run: |
+          docker build -t $DOCKER_HUB_USER/smartpay-transaction:latest ./transaction-service
+          docker push $DOCKER_HUB_USER/smartpay-transaction:latest
+
+      - name: Build & Push Notification
+        run: |
+          docker build -t $DOCKER_HUB_USER/smartpay-notification:latest ./notification-service
+          docker push $DOCKER_HUB_USER/smartpay-notification:latest

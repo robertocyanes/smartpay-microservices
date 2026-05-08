@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>com.smartpay</groupId>
-        <artifactId>smartpay</artifactId>
+        <artifactId>smartpay-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
@@ -12,19 +12,25 @@
 
     <dependencies>
 
-        <!-- GATEWAY -->
+        <!-- Gateway -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
-        <!-- EUREKA CLIENT -->
+        <!-- Eureka Client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!-- TESTS -->
+        <!-- WebFlux base -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

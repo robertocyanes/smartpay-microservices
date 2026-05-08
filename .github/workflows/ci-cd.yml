@@ -1,15 +1,21 @@
-name: SmartPay CI/CD Pipeline
+name: SmartPay Production CI/CD
 
 on:
   push:
     branches: [ "main" ]
 
+env:
+  DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+  DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+
 jobs:
+
   build-test:
 
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -19,11 +25,8 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Build with Maven
+      - name: Build all microservices
         run: mvn clean package -DskipTests
 
-      - name: Run Tests
+      - name: Run tests
         run: mvn test
-
-      - name: Build Docker images
-        run: docker compose build
