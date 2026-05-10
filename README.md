@@ -1,246 +1,398 @@
-# 🟢 SmartPay - Microservices Platform
-
-Plataforma de pagamentos distribuída baseada em arquitetura de microserviços com Spring Boot, Spring Cloud, RabbitMQ e Docker.
-
-O projeto simula um ecossistema real de pagamentos com comunicação síncrona e assíncrona, service discovery, API Gateway e mensageria.
-
----
-
-## 📌 Visão Geral
-
-O SmartPay é um sistema de microserviços que simula um fluxo completo de pagamentos:
-
-- Criação de pagamentos
-- Processamento de transações
-- Notificações assíncronas
-- Comunicação via mensageria (RabbitMQ)
-- Roteamento centralizado via API Gateway
-- Registro e descoberta de serviços via Eureka
-
----
-
-## 🧱 Arquitetura
-
-                ┌──────────────────────┐
-                │    API Gateway       │
-                │  Spring Cloud Gate.  │
-                └─────────┬────────────┘
-                          │
-    ┌─────────────────────┼─────────────────────┐
-    │                     │                     │
-
-┌───────────────┐ ┌──────────────────┐ ┌──────────────────┐
-│ Payment │ │ Transaction │ │ Notification │
-│ Service │ │ Service │ │ Service │
-└──────┬────────┘ └──────┬───────────┘ └──────┬───────────┘
-│ │ │
-└──────────┬────────┴──────────┬──────────┘
-│ │
-┌──────────────┐
-│ RabbitMQ │
-└──────────────┘
-│
-┌──────────────────┐
-│ Eureka Server │
-└──────────────────┘
+🟢 SmartPay — Microservices Payment Platform
+Plataforma distribuída de pagamentos baseada em arquitetura de microserviços utilizando:
 
 
----
-
-## 🚀 Tecnologias Utilizadas
-
-### Backend
-- Java 21
-- Spring Boot 3.3+
-- Spring Cloud Gateway
-- Spring Cloud Netflix Eureka
-- Spring Data JPA
-- Spring AMQP (RabbitMQ)
-- H2 Database
-
-### Infraestrutura
-- Docker & Docker Compose
-- RabbitMQ (Management Plugin)
-- Eureka Server
-
-### Testes
-- JUnit 5
-- Spring Boot Test
-- Testes manuais com Postman
-
-### DevOps / CI-CD
-- GitHub Actions
-- Maven
-- Docker Build Pipeline
-
----
-
-## 🧩 Microserviços
-
-### 📡 Discovery Server (Eureka)
-- Porta: `8761`
-- Responsável por registrar e descobrir serviços
-
----
-
-### 🌐 Gateway Service
-- Porta: `8080`
-- Centraliza todas as requisições
-
-Rotas:
-- `/payments/**` → Payment Service
-- `/transactions/**` → Transaction Service
-
----
-
-### 💰 Payment Service
-- Porta: `8081`
-
-Responsável por:
-- Criar pagamentos
-- Publicar eventos no RabbitMQ
-- Persistência em banco H2
-
----
-
-### 🟢 Transaction Service
-- Porta: `8083`
-
-Responsável por:
-- Consumir mensagens do RabbitMQ
-- Processar transações
-- Persistir histórico
-
----
-
-### 🟢 Notification Service
-- Porta: `8084`
-
-Responsável por:
-- Consumir eventos do RabbitMQ
-- Simular envio de notificações
-
----
-
-### 🟢 RabbitMQ
-- AMQP: `5672`
-- Dashboard: `15672`
-
-Responsável por:
-- Mensageria assíncrona
-- Comunicação entre serviços
-
----
-
-## 🔄 Fluxo do Sistema
+Java 21
 
 
-Payment Service
-↓
+Spring Boot 3
+
+
+Spring Cloud
+
+
 RabbitMQ
-↓
-Transaction Service
-↓
-Notification Service
 
 
----
+Docker
 
-## ⚙️ Configuração dos Serviços
 
-Exemplo padrão de configuração:
+GitHub Actions
 
-```properties
-spring.application.name=payment-service
 
-eureka.client.service-url.defaultZone=http://discovery-server:8761/eureka/
+Cypress
 
-spring.rabbitmq.host=rabbitmq
-spring.rabbitmq.port=5672
-spring.rabbitmq.username=guest
-spring.rabbitmq.password=guest
-🟢 Docker
-Subir todo o ambiente:
-docker compose down -v
-docker compose up --build
 
-Inclui:
+JWT Authentication
+
+
+Projeto desenvolvido para fins de estudo, portfólio e demonstração prática de arquitetura moderna backend com microsserviços.
+
+📌 Repositório Oficial
+SmartPay Microservices Repository
+
+🚀 Visão Geral
+O SmartPay simula um ecossistema real de pagamentos distribuídos.
+O sistema possui:
+✅ API Gateway
+✅ Service Discovery (Eureka)
+✅ Comunicação assíncrona com RabbitMQ
+✅ Microsserviços independentes
+✅ Dockerização completa
+✅ Pipeline CI/CD
+✅ Testes automatizados
+✅ Autenticação JWT
+✅ Arquitetura escalável
+
+🧱 Arquitetura do Sistema
+                ┌──────────────────────┐                │    API Gateway       │                │ Spring Cloud Gateway │                └─────────┬────────────┘                          │    ┌─────────────────────┼─────────────────────┐    │                     │                     │┌───────────────┐ ┌──────────────────┐ ┌──────────────────┐│ Payment       │ │ Transaction      │ │ Notification     ││ Service       │ │ Service          │ │ Service          │└──────┬────────┘ └──────┬───────────┘ └──────┬───────────┘       │                  │                    │       └──────────┬───────┴──────────┬─────────┘                  │                  │             ┌──────────────┐             │   RabbitMQ   │             └──────────────┘                     │             ┌──────────────────┐             │ Eureka Discovery │             │      Server      │             └──────────────────┘
+
+🧩 Microsserviços
+🌐 Gateway Service
+Porta: 8080
+Responsável por:
+
+
+Centralizar requisições
+
+
+Validar JWT
+
+
+Fazer roteamento entre serviços
+
+
+Controlar autenticação
+
+
+Rotas
+RotaServiço/payments/**Payment Service/transactions/**Transaction Service
+
+📡 Discovery Server (Eureka)
+Porta: 8761
+Responsável por:
+
+
+Registro automático de serviços
+
+
+Descoberta dinâmica
+
+
+Balanceamento lógico
+
+
+Dashboard:
+http://localhost:8761
+
+💰 Payment Service
+Porta: 8081
+Responsável por:
+
+
+Criar pagamentos
+
+
+Persistir dados
+
+
+Publicar eventos no RabbitMQ
+
+
+
+💳 Transaction Service
+Porta: 8083
+Responsável por:
+
+
+Consumir eventos
+
+
+Processar transações
+
+
+Persistir histórico
+
+
+
+🔔 Notification Service
+Porta: 8084
+Responsável por:
+
+
+Consumir eventos
+
+
+Simular notificações
+
+
+Logs assíncronos
+
+
+
+🐇 RabbitMQ
+ServiçoPortaAMQP5672Dashboard15672
+Painel:
+http://localhost:15672
+Usuário padrão:
+guestguest
+
+🔄 Fluxo Completo do Sistema
+Client Request       ↓API Gateway       ↓Payment Service       ↓RabbitMQ       ↓Transaction Service       ↓Notification Service
+
+🔐 Segurança com JWT
+O projeto utiliza autenticação baseada em JWT no Gateway Service.
+Funcionalidades
+✅ Validação de token
+✅ Filtro JWT customizado
+✅ Rotas protegidas
+✅ Gateway centralizado
+Exemplo Header
+Authorization: Bearer TOKEN_AQUI
+Variáveis de Ambiente
+Exemplo:
+jwt.secret=smartpay-secret-keyjwt.expiration=86400000
+⚠ Nunca versionar secrets diretamente no repositório.
+
+⚙️ Configuração Base
+application.properties
+spring.application.name=payment-serviceeureka.client.service-url.defaultZone=http://discovery-server:8761/eureka/spring.rabbitmq.host=rabbitmqspring.rabbitmq.port=5672spring.rabbitmq.username=guestspring.rabbitmq.password=guest
+
+🐳 Docker
+Subir Ambiente Completo
+docker compose down -vdocker compose up --build
+
+📦 Containers Esperados
+
 
 Eureka Server
-Gateway
+
+
+Gateway Service
+
+
 Payment Service
+
+
 Transaction Service
+
+
 Notification Service
+
+
 RabbitMQ
-🔐 Segurança e CI/CD
 
-Este projeto segue boas práticas de segurança em pipelines:
 
-❌ O que NÃO é feito
-Nenhuma senha ou token é versionado
-Nenhuma credencial exposta no código
-Nenhum usuário Docker fixo no repositório
-✅ O que é usado
-GitHub Secrets
-Variáveis de ambiente (.env)
-Tokens temporários de CI/CD
-🔑 Autenticação em CI/CD
 
-Em pipelines automatizados:
-
-GitHub Actions usa secrets.GITHUB_TOKEN
-Docker Hub usa:
-DOCKER_USERNAME
-DOCKER_PASSWORD
-
-Exemplo:
-
-echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-🟢 Testes
-Testes Manuais
-Teste Automatizados (Cypress)
-Postman
-Endpoints REST:
-/payments
-/transactions
-Testes Automatizados
+🧪 Testes
+✅ Testes Automatizados
 JUnit 5
-Spring Boot Test
+
+
 Testes de contexto
 
-🟢 Fluxo Completo
-Usuário cria pagamento
-Payment Service processa
-Evento enviado ao RabbitMQ
-Transaction Service consome evento
-Notification Service reage
-Eureka mantém descoberta de serviços
-Gateway centraliza requisições
 
-🟢 Conceitos Aplicados
-Arquitetura de microserviços
-Comunicação assíncrona (RabbitMQ)
-API Gateway
-Service Discovery (Eureka)
-Dockerização completa
-CI/CD básico
-Testes automatizados
-Mensageria distribuída
+Testes de integração
 
-🟢Como rodar localmente
-git clone <repo>
-cd smartpay
+
+Spring Boot Test
+
+
+Cypress
+Testes E2E automatizados para:
+
+
+Fluxo de pagamentos
+
+
+Gateway
+
+
+APIs REST
+
+
+
+✅ Testes Manuais
+Ferramentas:
+
+
+Postman
+
+
+Insomnia
+
+
+
+📡 Endpoints
+Payments
+POST /paymentsGET /payments
+
+Transactions
+GET /transactions
+
+⚡ CI/CD — GitHub Actions
+O projeto possui pipeline automatizada utilizando GitHub Actions.
+Pipeline Executa
+✅ Build Maven
+✅ Execução de testes
+✅ Validação de projeto
+✅ Docker Build
+✅ Workflow automatizado
+
+🔒 Boas Práticas de Segurança
+❌ Não utilizado
+
+
+Senhas hardcoded
+
+
+Tokens expostos
+
+
+Credenciais no Git
+
+
+
+✅ Utilizado
+
+
+GitHub Secrets
+
+
+Variáveis de ambiente
+
+
+Docker environment variables
+
+
+JWT Authentication
+
+
+
+🛠 Tecnologias Utilizadas
+Backend
+
+
+Java 21
+
+
+Spring Boot 3.3+
+
+
+Spring Cloud Gateway
+
+
+Spring Cloud Netflix Eureka
+
+
+Spring Security
+
+
+Spring AMQP
+
+
+Spring Data JPA
+
+
+H2 Database
+
+
+JWT (jjwt)
+
+
+
+Infraestrutura
+
+
+Docker
+
+
+Docker Compose
+
+
+RabbitMQ
+
+
+Eureka Server
+
+
+
+Testes
+
+
+JUnit 5
+
+
+Spring Boot Test
+
+
+Cypress
+
+
+
+DevOps
+
+
+GitHub Actions
+
+
+Maven
+
+
+Docker Pipeline
+
+
+
+📁 Estrutura do Projeto
+smartpay/│├── discovery-server/├── gateway-service/├── payment-service/├── transaction-service/├── notification-service/├── cypress-tests/│├── docker-compose.yml├── pom.xml└── README.md
+
+▶ Como Rodar Localmente
+1️⃣ Clonar repositório
+git clone https://github.com/robertocyanes/smartpay-microservices.git
+
+2️⃣ Entrar na pasta
+cd smartpay-microservices
+
+3️⃣ Subir containers
 docker compose up --build
 
 📌 Status do Projeto
-✔ Microserviços funcionando
-✔ RabbitMQ integrado
-✔ Eureka Server ativo
-✔ Gateway configurado
-✔ Docker funcionando
-✔ Mensageria implementada
-✔ Testes estruturados
-✔ CI/CD base pronto
+FuncionalidadeStatusMicroserviços✅Eureka Server✅API Gateway✅RabbitMQ✅Docker✅JWT✅Cypress✅GitHub Actions✅CI/CD✅Mensageria Assíncrona✅
 
- Autor Roberto César Yanes
-  
+📚 Conceitos Aplicados
+
+
+Arquitetura de Microserviços
+
+
+Comunicação Assíncrona
+
+
+Mensageria Distribuída
+
+
+API Gateway
+
+
+Service Discovery
+
+
+JWT Authentication
+
+
+Dockerização
+
+
+CI/CD
+
+
+Testes Automatizados
+
+
+Event Driven Architecture
+
+
+
+Autor:
+Roberto Cesar Yanes
+GitHub: robertocyanes
