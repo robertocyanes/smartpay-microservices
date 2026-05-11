@@ -69,7 +69,7 @@ O sistema possui:
 
 ---
 
-# 🧩 Microsserviços
+# 🟢 Microsserviços
 
 ## 🌐 Gateway Service
 
@@ -163,7 +163,7 @@ guest
 
 ---
 
-# 🔄 Fluxo Completo do Sistema
+# 🟢 Fluxo Completo do Sistema
 
 ```text
 Client Request
@@ -211,7 +211,7 @@ jwt.expiration=86400000
 
 ---
 
-# ⚙️ Configuração Base
+# 🟢 Configuração Base
 
 ## application.properties
 
@@ -251,7 +251,7 @@ docker compose up --build
 
 ---
 
-# 🧪 Testes
+# 🟢 Testes
 
 ## ✅ Testes Automatizados
 
@@ -330,7 +330,7 @@ O projeto possui pipeline automatizada utilizando GitHub Actions.
 
 ---
 
-# 🛠 Tecnologias Utilizadas
+# 🟢 Tecnologias Utilizadas
 
 ## Backend
 
@@ -431,7 +431,7 @@ docker compose up --build
 
 ---
 
-# 📚 Conceitos Aplicados
+# 🟢 Conceitos Aplicados
 
 - Arquitetura de Microserviços
 - Comunicação Assíncrona
