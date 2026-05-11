@@ -297,7 +297,7 @@ GET /transactions
 
 ---
 
-# ⚡ CI/CD — GitHub Actions
+# 🟢 CI/CD — GitHub Actions
 
 O projeto possui pipeline automatizada utilizando GitHub Actions.
 
@@ -311,7 +311,7 @@ O projeto possui pipeline automatizada utilizando GitHub Actions.
 
 ---
 
-# 🔒 Boas Práticas de Segurança
+# 🟢 Boas Práticas de Segurança
 
 ## ❌ Não utilizado
 
