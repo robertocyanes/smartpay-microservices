@@ -39,7 +39,7 @@ O sistema possui:
 
 ---
 
-# 🧱 Arquitetura do Sistema
+# 🟢 Arquitetura do Sistema
 
 ```text
                 ┌──────────────────────┐
